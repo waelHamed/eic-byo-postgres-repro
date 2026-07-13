@@ -33,7 +33,7 @@ The fault is confined to the platform's Bitnami-subchart image mirror in `stsn22
 ## Build a CSAR yourself (any test)
 
 ```bash
-git clone https://github.com/dr-wael-abdulaziz/eic-byo-postgres-repro.git
+git clone https://github.com/waelHamed/eic-byo-postgres-repro.git
 cd eic-byo-postgres-repro/test-01-fullrays-sample-db-test/source
 ./build-csar-with-database.sh <VERSION> ./csar-output
 # result: ./csar-output/<APP-NAME>.csar
