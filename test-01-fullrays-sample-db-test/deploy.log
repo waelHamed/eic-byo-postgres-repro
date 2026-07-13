@@ -1,0 +1,38 @@
+=== DEPLOY sample rApp — fullrays-sample-db-test 3.2.2-0 ===
+Fri Jul 10 21:09:12 UTC 2026
+21:09:12Z rApp name from CSAR: fullrays-sample-db-test
+21:09:12Z fetching OAuth token from https://eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/auth/realms/master/protocol/openid-connect/token
+21:09:12Z token acquired (exp=300s)
+21:09:12Z uploading /home/x-zwdabae/fullrays/fullrays-sample-db-test.csar to eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/app-onboarding/v2/app-packages
+21:09:14Z onboarding job: 7f5853ad-1c66-41d6-ad97-8849fc992175
+21:09:14Z polling onboarding job 7f5853ad-1c66-41d6-ad97-8849fc992175
+21:09:14Z onboarding status=UPLOADED
+21:09:19Z onboarding status=ONBOARDED
+21:09:19Z onboarded appId=rapp-ericsson-fullrays-sample-db-test-3-2-2-0
+21:09:19Z current app state: CREATED
+21:09:19Z POST initialization-actions
+21:09:19Z post-init state=INITIALIZING
+21:09:24Z post-init state=INITIALIZING
+21:09:29Z post-init state=INITIALIZING
+21:09:34Z post-init state=INITIALIZING
+21:09:39Z post-init state=INITIALIZING
+21:09:44Z post-init state=INITIALIZING
+21:09:49Z post-init state=INITIALIZING
+21:09:54Z post-init state=INITIALIZING
+21:09:59Z post-init state=INITIALIZING
+21:10:04Z post-init state=INITIALIZED
+21:10:04Z PUT mode=ENABLED
+21:10:05Z creating new instance
+21:10:05Z instance: rapp-ericsson-fullrays-sample-db-test-56021667
+21:10:06Z Keycloak client rapp-ericsson-fullrays-sample-db-test-56021667: secret_set=yes
+21:10:06Z POST deployment-actions (componentInstance=fullrays-sample-db-test); body: (see deploy-body.json)
+upstream connect error or disconnect/reset before headers. reset reason: connection termination
+21:10:06Z ERROR: deploy failed (HTTP 503)
+
+=== exit code: 0 ===
+Fri Jul 10 21:10:06 UTC 2026
+
+NOTE: The HTTP 503 is a cosmetic Envoy edge behaviour observed on every DEPLOY
+call in this sandbox — it resets before ALM answers, but ALM has already
+enqueued the deployment. The poll log below confirms ALM entered DEPLOYING
+state within seconds.

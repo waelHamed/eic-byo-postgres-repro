@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "dataJobs": {
+    "twin-nrcelldu-pm-counter-data-job": {
+      "dataDelivery": "CONTINUOUS",
+      "dataDeliveryMechanism": "STREAMING_KAFKA",
+      "dataDeliverySchemaId": "NR.RAN.PM_COUNTERS.NRCellDU_GNBDU_1",
+      "dataTypeId": "ERICSSON:NrRanPmCounterData:1.0.3",
+      "isMandatory": "YES",
+      "status": "ENABLED",
+      "productionJobDefinition": {}
+    }
+  }
+}

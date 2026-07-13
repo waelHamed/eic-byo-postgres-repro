@@ -1,0 +1,208 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "fullrays-indoor-wireless-twin.name" . }}
+  labels:
+    {{- include "fullrays-indoor-wireless-twin.labels" . | indent 4 }}
+    {{- if .Values.labels }}
+      {{ .Values.labels | toYaml | indent 4 }}
+    {{- end }}
+  annotations:
+    {{- include "fullrays-indoor-wireless-twin.product-info" . | indent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "fullrays-indoor-wireless-twin.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  strategy:
+    type: {{ .Values.updateStrategy.type }}
+    {{- if and (eq .Values.updateStrategy.type "RollingUpdate") .Values.updateStrategy.rollingUpdate }}
+    rollingUpdate:
+{{- if .Values.updateStrategy.rollingUpdate.maxUnavailable }}
+      maxUnavailable: {{ .Values.updateStrategy.rollingUpdate.maxUnavailable }}
+{{- end }}
+{{- if .Values.updateStrategy.rollingUpdate.maxSurge }}
+      maxSurge: {{ .Values.updateStrategy.rollingUpdate.maxSurge }}
+{{- end }}
+    {{- end }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "fullrays-indoor-wireless-twin.name" . }}
+        app.kubernetes.io/name: {{ include "fullrays-indoor-wireless-twin.name" . }}
+        app.kubernetes.io/version: {{ include "fullrays-indoor-wireless-twin.version" . }}
+        helm.sh/chart: {{ template "fullrays-indoor-wireless-twin.chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        service.cleartext/scraping: "true"
+      annotations:
+        {{- if not (semverCompare ">=1.30.0" .Capabilities.KubeVersion.GitVersion) }}
+        container.apparmor.security.beta.kubernetes.io/fullrays-indoor-wireless-twin: {{ include "fullrays-indoor-wireless-twin.appArmorProfileAnnotation" . | default "runtime/default" }}
+        {{- end }}
+        prometheus.io/port: "{{ .Values.service.port }}"
+        prometheus.io/scrape: "{{ .Values.prometheus.scrape }}"
+        prometheus.io/path: "{{ .Values.prometheus.path }}"
+{{- include "fullrays-indoor-wireless-twin.product-info" . | indent 8 }}
+    spec:
+      automountServiceAccountToken: false
+      {{- if (index .Values "podPriority" "fullrays-indoor-wireless-twin" "priorityClassName") }}
+      priorityClassName: {{ (index .Values "podPriority" "fullrays-indoor-wireless-twin" "priorityClassName") }}
+      {{- end }}
+      volumes:
+        - name: platform-cacerts
+          secret:
+            secretName: {{ index .Values "platformCaCertSecretName" | quote }}
+            defaultMode: 420
+        - name: app-certs
+          secret:
+            secretName: {{ index .Values "appSecretName" | quote }}
+            defaultMode: 420
+        - name: kafka-cacerts
+          secret:
+            secretName: {{ index .Values "kafkaCaCertSecretName" | quote }}
+            defaultMode: 420
+      securityContext:
+        fsGroup: {{include "fullrays-indoor-wireless-twin.fsGroup" .}}
+      hostPID: false
+      hostIPC: false
+      hostNetwork: false
+      containers:
+        - name: fullrays-indoor-wireless-twin
+          image: {{ template "fullrays-indoor-wireless-twin.imagePath" (dict "imageId" "fullrays-indoor-wireless-twin" "values" .Values "files" .Files) }}
+          imagePullPolicy: {{ include "fullrays-indoor-wireless-twin.registryImagePullPolicy" . | quote }}
+          securityContext:
+            {{- if semverCompare ">=1.30.0" .Capabilities.KubeVersion.GitVersion }}
+            appArmorProfile:
+              type: {{ include "fullrays-indoor-wireless-twin.appArmorProfile.type" . | default "RuntimeDefault" }}
+            {{- end }}
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            capabilities:
+              drop:
+              - all
+            {{- include "fullrays-indoor-wireless-twin.seccomp-profile" . | indent 12 }}
+            procMount: Default
+          volumeMounts:
+            - name: platform-cacerts
+              mountPath: {{ index .Values "platformCaCertMountPath" | default .Values.instantiationDefaults.platformCaCertMountPath | quote }}
+              readOnly: true
+            - name: app-certs
+              mountPath: {{ index .Values "appCertMountPath" | default .Values.instantiationDefaults.appCertMountPath | quote }}
+              readOnly: true
+            - name: kafka-cacerts
+              mountPath: {{ index .Values "kafkaCaCertMountPath" | default .Values.instantiationDefaults.kafkaCaCertMountPath | quote }}
+              readOnly: true
+          env:
+            - name: IAM_CLIENT_ID
+              value: {{ index .Values "clientId" | quote }}
+            - name: IAM_CLIENT_SECRET
+              value: {{ index .Values "clientSecret" | quote }}
+            - name: EIC_HOST_URL
+              value: {{ index .Values "eicHostUrl" | quote }}
+            - name: LOG_ENDPOINT
+              value: {{ index .Values "logEndpoint" | quote }}
+            - name: CA_CERT_FILE_PATH
+              value: {{ index .Values "platformCaCertMountPath" | default .Values.instantiationDefaults.platformCaCertMountPath | quote }}
+            - name: CA_CERT_FILE_NAME
+              value:  {{ index .Values "platformCaCertFileName" | quote }}
+            - name: APP_KEY
+              value: {{ index .Values "appKeyFileName" | quote }}
+            - name: APP_CERT
+              value: {{ index .Values "appCertFileName" | quote }}
+            - name: APP_CERT_FILE_PATH
+              value: {{ index .Values "appCertMountPath" | default .Values.instantiationDefaults.appCertMountPath | quote }}
+            - name: KAFKA_CERT_MOUNT_PATH
+              value: {{ index .Values "kafkaCaCertMountPath" | default .Values.instantiationDefaults.kafkaCaCertMountPath | quote }}
+            - name: KAFKA_CERT_FILE_NAME
+              value: {{ index .Values "kafkaCaCertFileName" | default .Values.instantiationDefaults.kafkaCaCertFileName | quote }}
+            - name: CONSUMER_MESSAGE_BATCH_SIZE
+              value: {{ index .Values "consumerMessageBatchSize" | default .Values.instantiationDefaults.consumerMessageBatchSize | quote }}
+            - name: CONSUMER_TIMEOUT
+              value: {{ index .Values "consumerTimeout" | default .Values.instantiationDefaults.consumerTimeout | quote }}
+            - name: DATABASE_URL
+              value: "postgresql+asyncpg://{{ index .Values "postgresql-ha-credentials" "postgresql" "username" }}:{{ index .Values "postgresql-ha-credentials" "postgresql" "password" }}@{{ index .Values "postgresql-ha" "fullnameOverride" }}-pgpool:5432/{{ index .Values "postgresql-ha" "postgresql" "database" }}"
+            - name: TOPOLOGY_POLL_INTERVAL_MIN
+              value: {{ index .Values "topologyPollIntervalMin" | default .Values.instantiationDefaults.topologyPollIntervalMin | quote }}
+            - name: CONFIG_POLL_INTERVAL_MIN
+              value: {{ index .Values "configPollIntervalMin" | default .Values.instantiationDefaults.configPollIntervalMin | quote }}
+            - name: SERVICE_NAME
+              value: {{ .Chart.Name }}
+            - name: CONTAINER_NAME
+              value: {{ .Chart.Name }}
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_UID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: TZ
+              value: {{ template "fullrays-indoor-wireless-twin.timezone" . }}
+            - name: LOG_CTRL_FILE
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "fullrays-indoor-wireless-twin.name" . }}
+                  key: logcontrol.json
+            {{- include "fullrays-indoor-wireless-twin.jaegerEnv" . | indent 12 }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /fullrays-twin/health/liveness
+              port: {{ .Values.service.port }}
+          {{- if (index .Values "probes" "fullrays-indoor-wireless-twin" "livenessProbe" "initialDelaySeconds") }}
+            {{ print "initialDelaySeconds: " (index .Values "probes" "fullrays-indoor-wireless-twin" "livenessProbe" "initialDelaySeconds") }}
+          {{- end }}
+          {{- if (index .Values "probes" "fullrays-indoor-wireless-twin" "livenessProbe" "failureThreshold") }}
+            {{ print "failureThreshold: " (index .Values "probes" "fullrays-indoor-wireless-twin" "livenessProbe" "failureThreshold") }}
+          {{- end }}
+          {{- if (index .Values "probes" "fullrays-indoor-wireless-twin" "livenessProbe" "periodSeconds") }}
+            {{ print "periodSeconds: " (index .Values "probes" "fullrays-indoor-wireless-twin" "livenessProbe" "periodSeconds") }}
+          {{- end }}
+          {{- if (index .Values "probes" "fullrays-indoor-wireless-twin" "livenessProbe" "timeoutSeconds") }}
+            {{ print "timeoutSeconds: " (index .Values "probes" "fullrays-indoor-wireless-twin" "livenessProbe" "timeoutSeconds") }}
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /fullrays-twin/health/readiness
+              port: {{ .Values.service.port }}
+          {{- if (index .Values "probes" "fullrays-indoor-wireless-twin" "readinessProbe" "initialDelaySeconds") }}
+            {{ print "initialDelaySeconds: " (index .Values "probes" "fullrays-indoor-wireless-twin" "readinessProbe" "initialDelaySeconds") }}
+          {{- end }}
+          {{- if (index .Values "probes" "fullrays-indoor-wireless-twin" "readinessProbe" "failureThreshold") }}
+            {{ print "failureThreshold: " (index .Values "probes" "fullrays-indoor-wireless-twin" "readinessProbe" "failureThreshold") }}
+          {{- end }}
+          {{- if (index .Values "probes" "fullrays-indoor-wireless-twin" "readinessProbe" "periodSeconds") }}
+            {{ print "periodSeconds: " (index .Values "probes" "fullrays-indoor-wireless-twin" "readinessProbe" "periodSeconds") }}
+          {{- end }}
+          {{- if (index .Values "probes" "fullrays-indoor-wireless-twin" "readinessProbe" "timeoutSeconds") }}
+            {{ print "timeoutSeconds: " (index .Values "probes" "fullrays-indoor-wireless-twin" "readinessProbe" "timeoutSeconds") }}
+          {{- end }}
+          resources:
+            {{- toYaml .Values.resources.twinApp | nindent 12 }}
+      {{- if include "fullrays-indoor-wireless-twin.pullSecrets" . }}
+      imagePullSecrets:
+        - name: {{ template "fullrays-indoor-wireless-twin.pullSecrets" . }}
+      {{- end }}
+      terminationGracePeriodSeconds: {{ include "fullrays-indoor-wireless-twin.terminationGracePeriodSeconds" . }}
+      {{- if .Values.tolerations }}
+      tolerations:
+        {{- include "fullrays-indoor-wireless-twin.tolerations" . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity: {{- toYaml . | indent 8 }}
+      {{- end }}
+      nodeSelector: {{ include "fullrays-indoor-wireless-twin.nodeSelector" . | nindent 6 -}}

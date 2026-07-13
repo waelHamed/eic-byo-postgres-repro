@@ -1,0 +1,11 @@
+apiVersion: v2
+appVersion: "3.0.1-5"
+description: FullRays Indoor Wireless Twin rApp
+name: fullrays-indoor-wireless-twin
+type: application
+version: 3.0.1-5
+dependencies:
+  - name: postgresql-ha
+    version: "16.0.5"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: postgresql-ha.enabled

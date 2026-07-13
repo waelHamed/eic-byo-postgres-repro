@@ -1,0 +1,10 @@
+productName: "fullrays-mirror-probe"
+productNumber: "CXC 201 0000"
+images:
+  fullrays-mirror-probe:
+    productName: "Python hello world sample app image"
+    productNumber: ""
+    registry: "armdocker.rnd.ericsson.se"
+    repoPath: "proj-eric-oss-drop"
+    name: "fullrays-mirror-probe"
+    tag: "3.2.2-0"

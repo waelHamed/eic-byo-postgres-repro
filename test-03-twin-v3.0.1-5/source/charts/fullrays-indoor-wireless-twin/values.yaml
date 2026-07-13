@@ -1,0 +1,184 @@
+# Default values for fullrays-indoor-wireless-twin.
+global:
+  timezone: UTC
+  registry:
+    url: armdocker.rnd.ericsson.se
+    imagePullPolicy: Always
+  pullSecret:
+  internalIPFamily:
+  clientCredentials:
+    secret:
+      clientIdKey: clientId
+      clientSecretKey: clientSecret
+
+imageCredentials:
+  repoPath:
+  pullPolicy: IfNotPresent
+  registry:
+    url:
+  pullSecret:
+
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
+
+labels: {}
+
+replicaCount: 1
+
+nameOverride: ""
+fullnameOverride: ""
+
+appArmorProfile:
+  type: "RuntimeDefault"
+
+seccompProfile:
+  type: "RuntimeDefault"
+  localhostProfile:
+
+service:
+  type: ClusterIP
+  port: 8050
+
+ingress:
+  enabled: false
+  ingressClass: OAM-IngressClass
+  annotations: {}
+  host: ""
+  tls: []
+
+resources:
+  twinApp:
+    limits:
+      cpu: "500m"
+      memory: "512Mi"
+    requests:
+      cpu: "100m"
+      memory: "256Mi"
+
+nodeSelector:
+
+tolerations:
+  - key: node.kubernetes.io/not-ready
+    operator: Exists
+    effect: NoExecute
+    tolerationSeconds: 0
+  - key: node.kubernetes.io/unreachable
+    operator: Exists
+    effect: NoExecute
+    tolerationSeconds: 0
+
+affinity: {}
+
+env:
+  jaeger:
+    disabled: true
+    tags:
+    agent:
+      host: eric-dst-agent
+      port: 6831
+    sampler:
+      type: remote
+      param: 1
+      refreshInterval: 30s
+    reporter:
+      logSpans: true
+
+prometheus:
+  scrape: true
+  path: "/fullrays-twin/metrics"
+
+terminationGracePeriodSeconds: 30
+
+probes:
+  fullrays-indoor-wireless-twin:
+    livenessProbe:
+      failureThreshold: 3
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 10
+    readinessProbe:
+      failureThreshold: 3
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 10
+
+podPriority:
+  fullrays-indoor-wireless-twin:
+    priorityClassName : ""
+
+# PostgreSQL HA subchart (Bitnami) — bundled per EIC "Bring Your Own Database" pattern.
+# Postgres runs as a sibling of the app pod, in the same Helm release, in the same
+# namespace. Deploy consumes it via env DATABASE_URL wired in the deployment template.
+postgresql-ha:
+  enabled: true
+  fullnameOverride: "fullrays-twin-db"
+  global:
+    postgresql:
+      existingSecret: "fullrays-indoor-wireless-twin-postgresql-secret"
+    pgpool:
+      existingSecret: "fullrays-indoor-wireless-twin-pgpool-secret"
+    security:
+      allowInsecureImages: true
+  persistence:
+    enabled: true
+    size: 2Gi
+  postgresql:
+    replicaCount: 2
+    usePasswordFiles: false
+    database: twindb
+    networkPolicy:
+      enabled: false
+    repmgrDatabase: repmgr
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 500m
+      requests:
+        memory: 256Mi
+        cpu: 100m
+  pgpool:
+    replicaCount: 1
+    networkPolicy:
+      enabled: false
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: 1
+      requests:
+        memory: 512Mi
+        cpu: 250m
+  metrics:
+    enabled: false
+
+# Credentials the parent chart uses to create the Secrets that the postgresql-ha
+# subchart above expects to already exist. Overridden at instantiation.
+postgresql-ha-credentials:
+  postgresql:
+    username: twin
+    password: twin
+    repmgrPassword: RepmgrPass123
+    repmgrUsername: repmgr
+  pgpool:
+    adminPassword: PgpoolAdmin123
+
+# Defaults if these values are not provided at instantiation
+instantiationDefaults:
+  platformCaCertMountPath: "/etc/tls-ca/platform/"
+  appCertMountPath: "/etc/tls/log/"
+  appServerCertMountPath: "/etc/tls/server/"
+  kafkaCaCertMountPath: "/etc/kafka/certs/"
+  kafkaCaCertFileName: "tls.crt"
+  consumerMessageBatchSize: "100"
+  consumerTimeout: "30.0"
+  topologyPollIntervalMin: "60"
+  configPollIntervalMin: "5"
+
+# Server-side TLS (HTTPS termination at the rApp, port 8443)
+# Required for Service Exposure gateway to reach the rApp via mTLS.
+# Override `appServerSecretName` at instantiation; admin provisions the secret.
+appServerSecretName: ""
+appServerKeyFileName: "tls.key"
+appServerCertFileName: "tls.crt"

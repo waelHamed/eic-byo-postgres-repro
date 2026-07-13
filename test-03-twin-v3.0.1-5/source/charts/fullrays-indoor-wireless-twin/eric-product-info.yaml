@@ -1,0 +1,10 @@
+productName: "fullrays-indoor-wireless-twin"
+productNumber: "CXC 201 0000"
+images:
+  fullrays-indoor-wireless-twin:
+    productName: "FullRays Indoor Wireless Twin rApp"
+    productNumber: ""
+    registry: "armdocker.rnd.ericsson.se"
+    repoPath: "proj-eric-oss-drop"
+    name: "fullrays-indoor-wireless-twin"
+    tag: "3.0.1-5"

@@ -1,0 +1,10 @@
+#tosca_definitions_version: Metadata/Tosca.meta
+Description of an APP:
+    APPName: rapp-devcon-database-demo-app
+    APPVersion: 8.7.6-6
+    APPType: rApp
+APPComponent:
+    NameofComponent: rapp-devcon-database-demo-app
+    Version: 8.7.6-6
+    Path: OtherDefinitions/ASD/rapp-devcon-database-demo-appASD.yaml
+    ArtefactType: Microservice

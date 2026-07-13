@@ -1,0 +1,18 @@
+# Build outputs — large binaries, docker.tar tarballs, packaged .tgz, CSARs
+csar-output/
+*.csar
+*.tar
+*.tar.gz
+*-*-*.tgz
+docker.tar
+# Helm dependency artefacts fetched from repos — reproducible via `helm dep update`
+charts/eric-oss-hello-world-python-app/charts/*.tgz
+charts/eric-oss-hello-world-python-app/Chart.lock
+charts/**/charts/*.tgz
+# Auto-generated Dockerfile from template
+Dockerfile
+# CSAR meta shim (auto-generated per build)
+rapp-devcon-database-demo-app/
+fullrays-sample-db-test/
+fullrays-mirror-probe/
+fullrays-devcon-8-7-6-6/

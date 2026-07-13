@@ -1,0 +1,27 @@
+#tosca_definitions_version: Metadata/Tosca.meta
+Description of an APP:
+    APPName: fullrays-indoor-wireless-twin
+    APPProvider: Ericsson
+    APPVersion: 3.0.1-5
+    APPType: rApp
+AppComponentList:
+    - NameofComponent: fullrays-indoor-wireless-twin
+      Version: 3.0.1-5
+      Path: OtherDefinitions/ASD/fullrays-indoor-wireless-twinASD.yaml
+      ArtefactType: ASD
+    - NameofComponent: fullrays-indoor-wireless-twin-data-management
+      Version: 2.0.0
+      Path: OtherDefinitions/DataManagement
+      ArtefactType: DataManagement
+    - NameofComponent: fullrays-indoor-wireless-twin-security-management
+      Version: 1.0.0
+      Path: OtherDefinitions/SecurityManagement
+      ArtefactType: SecurityManagement
+APPPermissions:
+    - Resource: kafka
+      Scope: fullrays-indoor-wireless-twin
+APPRoles:
+    - Name: TopologyInventory_Application_ReadOnly
+    - Name: NetworkConfiguration_Application_ReadOnly
+    - Name: Data_Management_Consumer_Application
+    - Name: SchemaRegistry_Consumer_Application_Operator

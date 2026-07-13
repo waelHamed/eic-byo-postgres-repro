@@ -1,0 +1,10 @@
+asdId: 1
+asdSchemaVersion: 1.0.0
+asdProvider: Ericsson
+asdApplicationName: fullrays-mirror-probe
+asdApplicationVersion: 3.2.2-0
+asdApplicationInfoName: Devcon Database Demo App
+asdInfoDescription: Devcon Database Demo App for App Onboarding
+deploymentItems:
+    deploymentItemId: 1
+    artifactId: OtherDefinitions/ASD/fullrays-mirror-probe-3.2.2-0.tgz

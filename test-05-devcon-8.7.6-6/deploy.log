@@ -1,0 +1,29 @@
+=== DEPLOY rapp-devcon-database-demo-app 8.7.6-6 (control test — sample verbatim, version bump only) ===
+Mon Jul 13 09:07:50 UTC 2026
+09:07:50Z rApp name from CSAR: rapp-devcon-database-demo-app
+09:07:50Z fetching OAuth token from https://eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/auth/realms/master/protocol/openid-connect/token
+09:07:50Z token acquired (exp=300s)
+09:07:50Z uploading /home/x-zwdabae/fullrays/rapp-devcon-database-demo-app-8.7.6-6.csar to eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/app-onboarding/v2/app-packages
+09:07:52Z onboarding job: 3f6b571b-e030-44c8-a00e-2d3f1a735b86
+09:07:52Z polling onboarding job 3f6b571b-e030-44c8-a00e-2d3f1a735b86
+09:07:52Z onboarding status=UPLOADED
+09:07:57Z onboarding status=ONBOARDED
+09:07:57Z onboarded appId=rapp-ericsson-rapp-devcon-database-demo-app-8-7-6-6
+09:07:57Z current app state: CREATED
+09:07:57Z POST initialization-actions
+09:07:58Z post-init state=INITIALIZING
+[... INITIALIZING repeats through 09:08:33 ...]
+09:08:33Z post-init state=INITIALIZED
+09:08:33Z PUT mode=ENABLED
+09:08:34Z creating new instance
+09:08:34Z instance: rapp-ericsson-rapp-devcon-database-demo-app-03211346
+09:08:34Z Keycloak client rapp-ericsson-rapp-devcon-database-demo-app-03211346: secret_set=yes
+09:08:34Z POST deployment-actions (componentInstance=rapp-devcon-database-demo-app); body: (see deploy-body.json)
+upstream connect error or disconnect/reset before headers. reset reason: connection termination
+09:08:34Z ERROR: deploy failed (HTTP 503)
+
+=== exit code: 0 ===
+Mon Jul 13 09:08:34 UTC 2026
+
+NOTE: HTTP 503 is a cosmetic Envoy reset seen on every DEPLOY call in this
+sandbox — ALM receives and enqueues the deployment (confirmed by poll.log).

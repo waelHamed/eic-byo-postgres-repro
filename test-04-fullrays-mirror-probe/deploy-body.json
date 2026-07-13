@@ -1,0 +1,37 @@
+{
+  "type": "DEPLOY",
+  "additionalData": {
+    "componentInstances": [
+      {
+        "name": "fullrays-mirror-probe",
+        "properties": {
+          "timeout": 10,
+          "userDefinedHelmParameters": {
+            "eicHostUrl": "https://eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se",
+            "logEndpoint": "la.stsn22p1eic08.stsoss.sero.xgic.ericsson.se",
+            "platformCaCertSecretName": "eicaas-platform-ca-secret",
+            "platformCaCertFileName": "tls.crt",
+            "appSecretName": "fullrays-indoor-wireless-twin-eric-eic-secret",
+            "appKeyFileName": "tls.key",
+            "appCertFileName": "tls.crt",
+            "appServerSecretName": "fullrays-indoor-wireless-twin-server-eric-eic-secret",
+            "appServerKeyFileName": "tls.key",
+            "appServerCertFileName": "tls.crt",
+            "kafkaCaCertSecretName": "kafka-cacert-secret",
+            "clientId": "rapp-ericsson-fullrays-mirror-probe-86724860",
+            "clientSecret": "<redacted>",
+            "postgresql-ha.global.imageRegistry": "eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/appmgr/images/rapp-ericsson-fullrays-mirror-probe-3-2-2-0",
+            "postgresql-ha.global.imagePullSecrets": [
+              "hfe-generic-pull-secret"
+            ],
+            "postgresql-ha.global.security.allowInsecureImages": true,
+            "postgresql-ha.global.postgresql.existingSecret": "fullrays-mirror-probe-postgresql-secret",
+            "postgresql-ha.global.pgpool.existingSecret": "fullrays-mirror-probe-pgpool-secret",
+            "postgresql-ha-credentials.postgresql.username": "helloworld",
+            "postgresql-ha-credentials.postgresql.password": "MySecurePass123"
+          }
+        }
+      }
+    ]
+  }
+}

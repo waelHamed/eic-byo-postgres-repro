@@ -1,0 +1,74 @@
+=== poll mirror-probe-86724860 until terminal state ===
+Mon Jul 13 08:05:35 UTC 2026
+[08:05:35Z] status=DEPLOYING  comp0=DEPLOYING
+[08:05:45Z] status=DEPLOYING  comp0=DEPLOYING
+[08:05:55Z] status=DEPLOYING  comp0=DEPLOYING
+[08:06:05Z] status=DEPLOYING  comp0=DEPLOYING
+[08:06:15Z] status=DEPLOYING  comp0=DEPLOYING
+[08:06:25Z] status=DEPLOYING  comp0=DEPLOYING
+[08:06:35Z] status=DEPLOYING  comp0=DEPLOYING
+[08:06:45Z] status=DEPLOYING  comp0=DEPLOYING
+[08:06:56Z] status=DEPLOYING  comp0=DEPLOYING
+[08:07:06Z] status=DEPLOYING  comp0=DEPLOYING
+[08:07:16Z] status=DEPLOYING  comp0=DEPLOYING
+[08:07:26Z] status=DEPLOYING  comp0=DEPLOYING
+[08:07:36Z] status=DEPLOYING  comp0=DEPLOYING
+[08:07:46Z] status=DEPLOYING  comp0=DEPLOYING
+[08:07:56Z] status=DEPLOYING  comp0=DEPLOYING
+[08:08:06Z] status=DEPLOYING  comp0=DEPLOYING
+[08:08:16Z] status=DEPLOYING  comp0=DEPLOYING
+[08:08:26Z] status=DEPLOYING  comp0=DEPLOYING
+[08:08:36Z] status=DEPLOYING  comp0=DEPLOYING
+[08:08:46Z] status=DEPLOYING  comp0=DEPLOYING
+[08:08:56Z] status=DEPLOYING  comp0=DEPLOYING
+[08:09:06Z] status=DEPLOYING  comp0=DEPLOYING
+[08:09:16Z] status=DEPLOYING  comp0=DEPLOYING
+[08:09:26Z] refreshed token
+[08:09:27Z] status=DEPLOYING  comp0=DEPLOYING
+[08:09:37Z] status=DEPLOYING  comp0=DEPLOYING
+[08:09:47Z] status=DEPLOYING  comp0=DEPLOYING
+[08:09:57Z] status=DEPLOYING  comp0=DEPLOYING
+[08:10:07Z] status=DEPLOYING  comp0=DEPLOYING
+[08:10:17Z] status=DEPLOYING  comp0=DEPLOYING
+[08:10:27Z] status=DEPLOYING  comp0=DEPLOYING
+[08:10:37Z] status=DEPLOYING  comp0=DEPLOYING
+[08:10:47Z] status=DEPLOYING  comp0=DEPLOYING
+[08:10:57Z] status=DEPLOYING  comp0=DEPLOYING
+[08:11:07Z] status=DEPLOYING  comp0=DEPLOYING
+[08:11:17Z] status=DEPLOYING  comp0=DEPLOYING
+[08:11:27Z] status=DEPLOYING  comp0=DEPLOYING
+[08:11:37Z] status=DEPLOYING  comp0=DEPLOYING
+[08:11:47Z] status=DEPLOYING  comp0=UNDEPLOYED
+[08:11:57Z] status=DEPLOYING  comp0=UNDEPLOYED
+[08:12:07Z] status=DEPLOY_ERROR  comp0=UNDEPLOYED
+--- terminal ERROR — full events ---
+{
+  "status": "DEPLOY_ERROR",
+  "componentInstances": [
+    {
+      "name": "fullrays-mirror-probe",
+      "deployState": "UNDEPLOYED",
+      "message": "FAILED: Issue of creating pod(s) by timeout. Pod not found\nPod Name:rapp-devcon-db-pgpool-6c9674f547-ztzhr, Reason:ImagePullBackOff\nPod Name:rapp-devcon-db-postgresql-0, Reason:ImagePullBackOff\nPod Name:rapp-devcon-db-postgresql-1, Reason:ImagePullBackOff"
+    }
+  ],
+  "events": [
+    {
+      "type": "DEPLOY",
+      "title": "FAILED: ACM Failure",
+      "detail": "59e0db2c-5f8f-43a3-8074-39365fb93440: FAILED: Issue of creating pod(s) by timeout. Pod not found\nPod Name:rapp-devcon-db-pgpool-6c9674f547-ztzhr, Reason:ImagePullBackOff\nPod Name:rapp-devcon-db-postgresql-0, Reason:ImagePullBackOff\nPod Name:rapp-devc",
+      "createdAt": "2026-07-13T08:12:03.267Z"
+    },
+    {
+      "type": "DEPLOY",
+      "title": "STARTED",
+      "detail": "DEPLOY has started",
+      "createdAt": "2026-07-13T08:01:36.998Z"
+    },
+    {
+      "type": "CREATE",
+      "title": "SUCCEEDED",
+      "detail": "CREATE has successfully completed",
+      "createdAt": "2026-07-13T08:01:36.743Z"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+asdId: 1
+asdSchemaVersion: 1.0.0
+asdProvider: Ericsson
+asdApplicationName: fullrays-indoor-wireless-twin
+asdApplicationVersion: 3.0.1-5
+asdApplicationInfoName: FullRays Indoor Wireless Twin
+asdInfoDescription: FullRays Indoor Wireless Twin rApp - monitors cell states for indoor positioning
+deploymentItems:
+    deploymentItemId: 1
+    artifactId: OtherDefinitions/ASD/fullrays-indoor-wireless-twin-3.0.1-5.tgz

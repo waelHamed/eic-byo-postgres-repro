@@ -1,0 +1,6 @@
+examplerAppPackage/OtherDefinitions/ASD/Images/
+__pycache__/
+*.pyc
+.pytest_cache/
+examplerAppPackage.csar
+*.csar.bak

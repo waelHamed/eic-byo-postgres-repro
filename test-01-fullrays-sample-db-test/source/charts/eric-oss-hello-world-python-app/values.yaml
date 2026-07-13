@@ -1,0 +1,180 @@
+# Default values for eric-oss-hello-world-python-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+global:
+  timezone: UTC
+  registry:
+    url: armdocker.rnd.ericsson.se
+    imagePullPolicy: IfNotPresent
+  pullSecret:
+  internalIPFamily:
+
+# PostgreSQL HA configuration
+postgresql-ha:
+  enabled: true
+  fullnameOverride: "rapp-devcon-db"
+  global:
+    postgresql:
+      existingSecret: "fullrays-sample-db-test-postgresql-secret"
+    pgpool:
+      existingSecret: "fullrays-sample-db-test-pgpool-secret"
+  persistence:
+    enabled: true
+    size: 1Gi
+  postgresql:
+    replicaCount: 2
+    usePasswordFiles: false
+    database: helloworlddb
+    networkPolicy:
+      enabled: false
+    repmgrDatabase: repmgr
+    resources:
+      limits:
+        memory: 256Mi
+        cpu: 250m
+      requests:
+        memory: 128Mi
+        cpu: 100m
+  pgpool:
+    replicaCount: 1
+    networkPolicy:
+      enabled: false
+    resources:
+      limits:
+        memory: 1Gi
+        cpu: 1
+      requests:
+        memory: 512Mi
+        cpu: 1
+  metrics:
+    enabled: false
+
+imageCredentials:
+  repoPath:
+  pullPolicy: IfNotPresent
+  registry:
+    url:
+  pullSecret:
+
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 1
+
+labels: {}
+
+replicaCount: 1
+
+nameOverride: "fullrays-sample-db-test"
+fullnameOverride: ""
+
+# choice='unconfined, runtime/default, localhost' [ default= ""]
+# Configuration of AppArmor profile type. The following values are possible:
+# unconfined  - Indicates that there is no profile loaded.
+# runtime/default - Applies the default profile of the container engine.
+# localhost   - Applies a specific profile loaded on the host
+appArmorProfile:
+  type: "RuntimeDefault"
+
+seccompProfile:
+  type: "RuntimeDefault"
+  localhostProfile:
+
+service:
+  type: ClusterIP
+  port: 8050
+
+ingress:
+  enabled: false
+  ingressClass: OAM-IngressClass
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  host: ""
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  helloWorld:
+    limits:
+      cpu: "100m"
+      memory: "64Mi"
+    requests:
+      cpu: "2m"
+      memory: "4Mi"
+
+nodeSelector:
+
+tolerations:
+  - key: node.kubernetes.io/not-ready
+    operator: Exists
+    effect: NoExecute
+    tolerationSeconds: 0
+  - key: node.kubernetes.io/unreachable
+    operator: Exists
+    effect: NoExecute
+    tolerationSeconds: 0
+
+affinity: {}
+
+env:
+  # Tracing configuration
+  jaeger:
+    ## disabled, When true will disable Jaeger tracer, will use opentracing.NoopTrace, No context will propagate
+    disabled: true
+    ## tags, key value pairs. The tags will be applied to the tracer and will be shown in UI process section.
+    ## Example: service=service-a, version=1.0.1
+    tags:
+    agent:
+      host: eric-dst-agent
+      port: 6831
+    sampler:
+      type: remote
+      param: 1
+      refreshInterval: 30s
+    reporter:
+      logSpans: true
+
+prometheus:
+  scrape: true
+  path: "/sample-app/python/metrics"
+
+terminationGracePeriodSeconds: 30
+
+probes:
+  eric-oss-hello-world-python-app:
+    livenessProbe:
+      failureThreshold: 3
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 10
+    readinessProbe:
+      failureThreshold: 3
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 10
+
+# Pod priority configuration for deployments
+podPriority:
+  eric-oss-hello-world-python-app:
+    priorityClassName : ""
+
+# Defaults if these values are not provided at instantiation
+instantiationDefaults:
+  platformCaCertMountPath: "/etc/tls-ca/platform/"
+  appCertMountPath: "/etc/tls/log/"
+
+# Configure username and password for postgresql-ha for demo purposes
+# Ideally user will create a secret with necessary credentials 
+# and pass it to the chart
+postgresql-ha-credentials:
+  postgresql:
+    username: helloworld
+    password: MySecurePass123
+    repmgrPassword: RepmgrPass123
+    repmgrUsername: repmgr
+  pgpool:
+    adminPassword: PgpoolAdmin123

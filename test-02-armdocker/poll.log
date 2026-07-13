@@ -1,0 +1,89 @@
+=== poll sample instance until terminal state ===
+Fri Jul 10 21:34:33 UTC 2026
+[21:34:33Z] status=DEPLOYING  comp0=DEPLOYING
+[21:34:43Z] status=DEPLOYING  comp0=DEPLOYING
+[21:34:53Z] status=DEPLOYING  comp0=DEPLOYING
+[21:35:03Z] status=DEPLOYING  comp0=DEPLOYING
+[21:35:13Z] status=DEPLOYING  comp0=DEPLOYING
+[21:35:23Z] status=DEPLOYING  comp0=DEPLOYING
+[21:35:33Z] status=DEPLOYING  comp0=DEPLOYING
+[21:35:43Z] status=DEPLOYING  comp0=DEPLOYING
+[21:35:53Z] status=DEPLOYING  comp0=DEPLOYING
+[21:36:04Z] status=DEPLOYING  comp0=DEPLOYING
+[21:36:14Z] status=DEPLOYING  comp0=DEPLOYING
+[21:36:24Z] status=DEPLOYING  comp0=DEPLOYING
+[21:36:34Z] status=DEPLOYING  comp0=DEPLOYING
+[21:36:44Z] status=DEPLOYING  comp0=DEPLOYING
+[21:36:54Z] status=DEPLOYING  comp0=DEPLOYING
+[21:37:04Z] status=DEPLOYING  comp0=DEPLOYING
+[21:37:14Z] status=DEPLOYING  comp0=DEPLOYING
+[21:37:24Z] status=DEPLOYING  comp0=DEPLOYING
+[21:37:34Z] status=DEPLOYING  comp0=DEPLOYING
+[21:37:44Z] status=DEPLOYING  comp0=DEPLOYING
+[21:37:54Z] status=DEPLOYING  comp0=DEPLOYING
+[21:38:04Z] status=DEPLOYING  comp0=DEPLOYING
+[21:38:14Z] status=DEPLOYING  comp0=DEPLOYING
+[21:38:24Z] status=DEPLOYING  comp0=DEPLOYING
+[21:38:34Z] status=DEPLOYING  comp0=DEPLOYING
+[21:38:44Z] status=DEPLOYING  comp0=DEPLOYING
+[21:38:54Z] status=DEPLOYING  comp0=DEPLOYING
+[21:39:04Z] status=DEPLOYING  comp0=DEPLOYING
+[21:39:15Z] status=DEPLOYING  comp0=DEPLOYING
+[21:39:25Z] status=DEPLOYING  comp0=DEPLOYING
+[21:39:35Z] status=401  comp0=?
+[21:39:45Z] status=401  comp0=?
+[21:39:55Z] status=401  comp0=?
+[21:40:05Z] status=401  comp0=?
+[21:40:15Z] status=401  comp0=?
+[21:40:25Z] status=401  comp0=?
+[21:40:35Z] status=401  comp0=?
+[21:40:45Z] status=401  comp0=?
+[21:40:55Z] status=401  comp0=?
+[21:41:05Z] refreshed token
+[21:41:05Z] status=DEPLOYING  comp0=DEPLOYING
+[21:41:15Z] status=DEPLOYING  comp0=DEPLOYING
+[21:41:25Z] status=DEPLOYING  comp0=DEPLOYING
+[21:41:35Z] status=DEPLOYING  comp0=DEPLOYING
+[21:41:45Z] status=DEPLOYING  comp0=DEPLOYING
+[21:41:55Z] status=DEPLOYING  comp0=DEPLOYING
+[21:42:05Z] status=DEPLOYING  comp0=DEPLOYING
+[21:42:15Z] status=DEPLOYING  comp0=DEPLOYING
+[21:42:25Z] status=DEPLOYING  comp0=DEPLOYING
+[21:42:35Z] status=DEPLOYING  comp0=DEPLOYING
+[21:42:45Z] status=DEPLOYING  comp0=DEPLOYING
+[21:42:55Z] status=DEPLOYING  comp0=DEPLOYING
+[21:43:06Z] status=DEPLOYING  comp0=DEPLOYING
+[21:43:16Z] status=DEPLOYING  comp0=UNDEPLOYED
+[21:43:26Z] status=DEPLOYING  comp0=UNDEPLOYED
+[21:43:36Z] status=DEPLOY_ERROR  comp0=UNDEPLOYED
+--- terminal ERROR — full events ---
+{
+  "status": "DEPLOY_ERROR",
+  "componentInstances": [
+    {
+      "name": "fullrays-sample-db-test",
+      "deployState": "UNDEPLOYED",
+      "message": "FAILED: Issue of creating pod(s) by timeout. Pod not found\nPod Name:rapp-devcon-db-pgpool-86f66bd8db-6km5h, Reason:ImagePullBackOff\nPod Name:rapp-devcon-db-postgresql-0, Reason:ImagePullBackOff\nPod Name:rapp-devcon-db-postgresql-1, Reason:ImagePullBackOff"
+    }
+  ],
+  "events": [
+    {
+      "type": "DEPLOY",
+      "title": "FAILED: ACM Failure",
+      "detail": "4b015bff-0380-41d0-b340-2d9a984718d6: FAILED: Issue of creating pod(s) by timeout. Pod not found\nPod Name:rapp-devcon-db-pgpool-86f66bd8db-6km5h, Reason:ImagePullBackOff\nPod Name:rapp-devcon-db-postgresql-0, Reason:ImagePullBackOff\nPod Name:rapp-devc",
+      "createdAt": "2026-07-10T21:43:33.270Z"
+    },
+    {
+      "type": "DEPLOY",
+      "title": "STARTED",
+      "detail": "DEPLOY has started",
+      "createdAt": "2026-07-10T21:33:04.209Z"
+    },
+    {
+      "type": "CREATE",
+      "title": "SUCCEEDED",
+      "detail": "CREATE has successfully completed",
+      "createdAt": "2026-07-10T21:33:03.926Z"
+    }
+  ]
+}

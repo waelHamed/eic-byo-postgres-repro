@@ -1,0 +1,37 @@
+{
+  "type": "DEPLOY",
+  "additionalData": {
+    "componentInstances": [
+      {
+        "name": "fullrays-indoor-wireless-twin",
+        "properties": {
+          "timeout": 10,
+          "userDefinedHelmParameters": {
+            "eicHostUrl": "https://eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se",
+            "logEndpoint": "la.stsn22p1eic08.stsoss.sero.xgic.ericsson.se",
+            "platformCaCertSecretName": "eicaas-platform-ca-secret",
+            "platformCaCertFileName": "tls.crt",
+            "appSecretName": "fullrays-indoor-wireless-twin-eric-eic-secret",
+            "appKeyFileName": "tls.key",
+            "appCertFileName": "tls.crt",
+            "appServerSecretName": "fullrays-indoor-wireless-twin-server-eric-eic-secret",
+            "appServerKeyFileName": "tls.key",
+            "appServerCertFileName": "tls.crt",
+            "kafkaCaCertSecretName": "kafka-cacert-secret",
+            "clientId": "rapp-ericsson-fullrays-indoor-wireless-twin-58949648",
+            "clientSecret": "<redacted>",
+            "postgresql-ha.global.imageRegistry": "eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/appmgr/images/rapp-ericsson-fullrays-indoor-wireless-twin-3-0-1-5",
+            "postgresql-ha.global.imagePullSecrets": [
+              "hfe-generic-pull-secret"
+            ],
+            "postgresql-ha.global.security.allowInsecureImages": true,
+            "postgresql-ha.global.postgresql.existingSecret": "fullrays-indoor-wireless-twin-postgresql-secret",
+            "postgresql-ha.global.pgpool.existingSecret": "fullrays-indoor-wireless-twin-pgpool-secret",
+            "postgresql-ha-credentials.postgresql.username": "twin",
+            "postgresql-ha-credentials.postgresql.password": "twin"
+          }
+        }
+      }
+    ]
+  }
+}

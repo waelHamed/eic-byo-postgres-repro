@@ -1,0 +1,33 @@
+=== REDEPLOY sample rApp — PG_IMAGE_REGISTRY = armdocker.rnd.ericsson.se ===
+Fri Jul 10 21:32:19 UTC 2026
+21:32:19Z rApp name from CSAR: fullrays-sample-db-test
+21:32:19Z fetching OAuth token from https://eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/auth/realms/master/protocol/openid-connect/token
+21:32:19Z token acquired (exp=300s)
+21:32:19Z uploading /home/x-zwdabae/fullrays/fullrays-sample-db-test.csar to eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/app-onboarding/v2/app-packages
+21:32:22Z onboarding job: 35a99f15-49ef-40c9-95ee-1cfde16a88b0
+21:32:22Z polling onboarding job 35a99f15-49ef-40c9-95ee-1cfde16a88b0
+21:32:22Z onboarding status=UPLOADED
+21:32:27Z onboarding status=ONBOARDED
+21:32:27Z onboarded appId=rapp-ericsson-fullrays-sample-db-test-3-2-2-0
+21:32:27Z current app state: CREATED
+21:32:27Z POST initialization-actions
+21:32:27Z post-init state=INITIALIZING
+21:32:32Z post-init state=INITIALIZING
+21:32:37Z post-init state=INITIALIZING
+21:32:42Z post-init state=INITIALIZING
+21:32:47Z post-init state=INITIALIZING
+21:32:52Z post-init state=INITIALIZING
+21:32:57Z post-init state=INITIALIZING
+21:33:02Z post-init state=INITIALIZED
+21:33:02Z PUT mode=ENABLED
+21:33:03Z creating new instance
+21:33:03Z instance: rapp-ericsson-fullrays-sample-db-test-11785075
+21:33:04Z Keycloak client rapp-ericsson-fullrays-sample-db-test-11785075: secret_set=yes
+21:33:04Z POST deployment-actions (componentInstance=fullrays-sample-db-test); body: (see deploy-body.json)
+upstream connect error or disconnect/reset before headers. reset reason: connection termination
+21:33:04Z ERROR: deploy failed (HTTP 503)
+
+=== exit code: 0 ===
+Fri Jul 10 21:33:04 UTC 2026
+
+NOTE: HTTP 503 same cosmetic Envoy reset as attempt 1. ALM entered DEPLOYING state.

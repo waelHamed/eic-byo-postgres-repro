@@ -1,0 +1,11 @@
+apiVersion: v2
+appVersion: "2.0.0"
+description: An rApp with a PostgreSQL database
+name: fullrays-mirror-probe
+type: application
+version: 3.2.2-0
+dependencies:
+  - name: postgresql-ha
+    version: "16.0.5"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: postgresql-ha.enabled

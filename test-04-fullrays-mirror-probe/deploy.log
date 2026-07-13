@@ -1,0 +1,30 @@
+=== DEPLOY fullrays-mirror-probe 3.2.2-0 (retry after cleanup) ===
+Mon Jul 13 08:00:21 UTC 2026
+08:00:21Z rApp name from CSAR: fullrays-mirror-probe
+08:00:21Z fetching OAuth token from https://eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/auth/realms/master/protocol/openid-connect/token
+08:00:21Z token acquired (exp=300s)
+08:00:21Z uploading /home/x-zwdabae/fullrays/fullrays-mirror-probe.csar to eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/app-onboarding/v2/app-packages
+08:00:24Z onboarding job: 84b30f66-732f-4611-b514-27ec5cec90fb
+08:00:24Z polling onboarding job 84b30f66-732f-4611-b514-27ec5cec90fb
+08:00:24Z onboarding status=UPLOADED
+08:00:29Z onboarding status=PARSED
+08:00:34Z onboarding status=ONBOARDED
+08:00:34Z onboarded appId=rapp-ericsson-fullrays-mirror-probe-3-2-2-0
+08:00:34Z current app state: CREATED
+08:00:34Z POST initialization-actions
+08:00:34Z post-init state=INITIALIZING
+[... repeated INITIALIZING through 08:01:35 ...]
+08:01:35Z post-init state=INITIALIZED
+08:01:35Z PUT mode=ENABLED
+08:01:36Z creating new instance
+08:01:36Z instance: rapp-ericsson-fullrays-mirror-probe-86724860
+08:01:36Z Keycloak client rapp-ericsson-fullrays-mirror-probe-86724860: secret_set=yes
+08:01:36Z POST deployment-actions (componentInstance=fullrays-mirror-probe); body: (see deploy-body.json)
+upstream connect error or disconnect/reset before headers. reset reason: connection termination
+08:01:36Z ERROR: deploy failed (HTTP 503)
+
+=== exit code: 0 ===
+Mon Jul 13 08:01:36 UTC 2026
+
+NOTE: HTTP 503 is a cosmetic Envoy reset seen on every DEPLOY call in this
+sandbox — ALM receives and enqueues the deployment (confirmed by poll.log).

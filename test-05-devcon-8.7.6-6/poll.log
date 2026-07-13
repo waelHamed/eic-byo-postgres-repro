@@ -1,0 +1,34 @@
+=== poll devcon-8.7.6-6 instance until terminal state ===
+Mon Jul 13 09:10:03 UTC 2026
+[09:10:03Z] status=DEPLOY_ERROR  comp0=UNDEPLOYED
+--- terminal ERROR — full events ---
+{
+  "status": "DEPLOY_ERROR",
+  "componentInstances": [
+    {
+      "name": "rapp-devcon-database-demo-app",
+      "deployState": "UNDEPLOYED",
+      "message": "ic\" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key \"meta.helm.sh/release-name\" must equal \"49261774-e9db-477a-84b4-55c52d10db42\": current value is \"328578cf-2783-4fae-93d2-4b08ef5549a6\""
+    }
+  ],
+  "events": [
+    {
+      "type": "DEPLOY",
+      "title": "FAILED: ACM Failure",
+      "detail": "4a0dd74c-beeb-492e-b0a0-524656303f2c: ic\" exists and cannot be imported into the current release: invalid ownership metadata; annotation validation error: key \"meta.helm.sh/release-name\" must equal \"49261774-e9db-477a-84b4-55c52d10db42\": current valu",
+      "createdAt": "2026-07-13T09:09:03.268Z"
+    },
+    {
+      "type": "DEPLOY",
+      "title": "STARTED",
+      "detail": "DEPLOY has started",
+      "createdAt": "2026-07-13T09:08:34.599Z"
+    },
+    {
+      "type": "CREATE",
+      "title": "SUCCEEDED",
+      "detail": "CREATE has successfully completed",
+      "createdAt": "2026-07-13T09:08:34.295Z"
+    }
+  ]
+}

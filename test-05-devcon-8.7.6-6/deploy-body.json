@@ -1,0 +1,37 @@
+{
+  "type": "DEPLOY",
+  "additionalData": {
+    "componentInstances": [
+      {
+        "name": "rapp-devcon-database-demo-app",
+        "properties": {
+          "timeout": 10,
+          "userDefinedHelmParameters": {
+            "eicHostUrl": "https://eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se",
+            "logEndpoint": "la.stsn22p1eic08.stsoss.sero.xgic.ericsson.se",
+            "platformCaCertSecretName": "eicaas-platform-ca-secret",
+            "platformCaCertFileName": "tls.crt",
+            "appSecretName": "fullrays-indoor-wireless-twin-eric-eic-secret",
+            "appKeyFileName": "tls.key",
+            "appCertFileName": "tls.crt",
+            "appServerSecretName": "fullrays-indoor-wireless-twin-server-eric-eic-secret",
+            "appServerKeyFileName": "tls.key",
+            "appServerCertFileName": "tls.crt",
+            "kafkaCaCertSecretName": "kafka-cacert-secret",
+            "clientId": "rapp-ericsson-rapp-devcon-database-demo-app-03211346",
+            "clientSecret": "<redacted>",
+            "postgresql-ha.global.imageRegistry": "eic.stsn22p1eic08.stsoss.sero.xgic.ericsson.se/appmgr/images/rapp-ericsson-rapp-devcon-database-demo-app-8-7-6-6",
+            "postgresql-ha.global.imagePullSecrets": [
+              "hfe-generic-pull-secret"
+            ],
+            "postgresql-ha.global.security.allowInsecureImages": true,
+            "postgresql-ha.global.postgresql.existingSecret": "rapp-devcon-database-demo-app-postgresql-secret",
+            "postgresql-ha.global.pgpool.existingSecret": "rapp-devcon-database-demo-app-pgpool-secret",
+            "postgresql-ha-credentials.postgresql.username": "helloworld",
+            "postgresql-ha-credentials.postgresql.password": "MySecurePass123"
+          }
+        }
+      }
+    ]
+  }
+}

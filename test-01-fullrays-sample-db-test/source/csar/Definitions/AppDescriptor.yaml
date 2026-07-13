@@ -1,0 +1,10 @@
+#tosca_definitions_version: Metadata/Tosca.meta
+Description of an APP:
+    APPName: fullrays-sample-db-test
+    APPVersion: 3.2.2-0
+    APPType: rApp
+APPComponent:
+    NameofComponent: fullrays-sample-db-test
+    Version: 3.2.2-0
+    Path: OtherDefinitions/ASD/fullrays-sample-db-testASD.yaml
+    ArtefactType: Microservice

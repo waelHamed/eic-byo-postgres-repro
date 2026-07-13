@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: {{ include "fullrays-indoor-wireless-twin.name" . }}-default-access
+  labels:
+    {{- include "fullrays-indoor-wireless-twin.labels" . | indent 4 }}
+    {{- if .Values.labels }}
+      {{ .Values.labels | toYaml | indent 4 }}
+    {{- end }}
+  annotations:
+  {{- include "fullrays-indoor-wireless-twin.product-info" . | indent 4 }}
+spec:
+  podSelector:
+    matchLabels:
+      app: fullrays-indoor-wireless-twin
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: eric-sef-exposure-api-gateway
+      namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: {{ (((.Values.global).platform).namespace) | default "eric-eic" }}
+    ports:
+    - port: {{ .Values.service.port }}
+
