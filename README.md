@@ -22,6 +22,28 @@ The fault is confined to the platform's Bitnami-subchart image mirror in `stsn22
 | **4** | [test-04-fullrays-mirror-probe/](test-04-fullrays-mirror-probe/) | `fullrays-mirror-probe` | `rapp-ericsson-fullrays-mirror-probe-3-2-2-0` | `rapp-ericsson-fullrays-mirror-probe-86724860` | `.../appmgr/images/rapp-ericsson-fullrays-mirror-probe-3-2-2-0`. **Distinctive new name + Docker image tag fully aligned across chart + build**. Full end-to-end test with Postgres passed locally. | **DEPLOY_ERROR** — identical failure |
 | **5** | [test-05-devcon-8.7.6-6/](test-05-devcon-8.7.6-6/) | `rapp-devcon-database-demo-app` (v8.7.6-6) | `rapp-ericsson-rapp-devcon-database-demo-app-8-7-6-6` | `rapp-ericsson-rapp-devcon-database-demo-app-03211346` | `.../appmgr/images/rapp-ericsson-rapp-devcon-database-demo-app-8-7-6-6`. **EIC sample verbatim, only version bumped to avoid onboard collision.** | **DEPLOY_ERROR** — but hit `"ic" exists` Helm ownership error before pod creation. Related but separate issue; see [test-05 README](test-05-devcon-8.7.6-6/README.md). |
 
+## Current sandbox state — what you can inspect directly
+
+As of ticket submission, these instances are still ONBOARDED in `stsn22p1eic08` — you can inspect their pods, events, and k8s resources:
+
+| Test | App ID (onboarded) | Instance ID | Status |
+| --- | --- | --- | --- |
+| **Test 4** | `rapp-ericsson-fullrays-mirror-probe-3-2-2-0` | `rapp-ericsson-fullrays-mirror-probe-86724860` | DEPLOY_ERROR — pgpool + postgresql-{0,1} `ImagePullBackOff`. Failed pods still in `eric-eic` ns: `rapp-devcon-db-pgpool-6c9674f547-ztzhr`, `rapp-devcon-db-postgresql-0`, `rapp-devcon-db-postgresql-1` |
+| **Test 5** | `rapp-ericsson-rapp-devcon-database-demo-app-8-7-6-6` | `rapp-ericsson-rapp-devcon-database-demo-app-03211346` | DEPLOY_ERROR — Helm ownership conflict on `-ic` resource. Never reached pod creation. |
+
+These are **deliberately left up** so you can `kubectl -n eric-eic describe pod <NAME>` (or Log Viewer equivalent) and see the exact "Failed to pull image X" kubelet event.
+
+**Torn down during our earlier diagnostic iteration** (evidence in logs but pods no longer in cluster):
+
+| Test | Instance ID | Why torn down |
+| --- | --- | --- |
+| 1 | `rapp-ericsson-fullrays-sample-db-test-56021667` | Cleaned before test 2 to isolate registry-value variable |
+| 2 | `rapp-ericsson-fullrays-sample-db-test-11785075` | Cleaned along with test 1 for test 4 setup |
+| 3 (Twin) | `rapp-ericsson-fullrays-indoor-wireless-twin-58949648` | Torn down to clear Helm-ownership blockers for later deploys (Section 5.5) |
+| 4 first attempt | `rapp-ericsson-fullrays-mirror-probe-12642891` | Hit Helm ownership error, retried as instance 86724860 |
+
+If pod-level inspection of a fresh redeploy would help, ping us — CSARs rebuild from this repo in 5–8 min per test.
+
 ## What we know works
 
 - **Main app image pulls fine** — `armdocker.rnd.ericsson.se/proj-eric-oss-drop/<APP>:<VER>` — cluster nodes CAN reach `armdocker.rnd.ericsson.se` with default credentials.
