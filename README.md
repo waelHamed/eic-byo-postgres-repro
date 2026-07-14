@@ -2,7 +2,7 @@
 
 **Purpose:** Reproduce the `ImagePullBackOff` failure of `postgresql-ha` subchart images (`pgpool`, `postgresql-repmgr`) that occurs when any rApp using EIC's documented "Bring Your Own Database" pattern is deployed in the `stsn22p1eic08` External Sandbox.
 
-**Reported by:** Wael Abdulaziz — dr.wael.abdulaziz@gmail.com — team `fullrays`
+**Reported by:** Wael Abdulaziz — wael.abdulaziz@fullrays.com — team `fullrays`
 **Environment:** `stsn22p1eic08.stsoss.sero.xgic.ericsson.se`
 **Approval trail:** mTLS provisioning approved 2026-06-20; Postgres provisioning clarification 2026-07-04 (EIC does NOT provision Postgres for rApps — apps must bundle via `postgresql-ha` subchart).
 
